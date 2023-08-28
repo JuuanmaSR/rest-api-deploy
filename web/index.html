@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Prograr API Rest</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        article {
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 2px black;
+            max-width: 320px;
+            padding: 1rem;
+            margin: auto;
+            margin-bottom: 10px;
+        }
+
+        img {
+            height: auto;
+            width: 320px;
+            max-width: 100%;
+        }
+    </style>
+    <script type="module">
+        fetch('http://localhost:1234/movies').then(
+            res => res.json()
+        ).then(movies => {
+            const html = movies.map(movie => {
+                return `
+                <article data-id="${movie.id}">
+                    <h2>${movie.title}</h2>
+                    <p>${movie.director}</p>
+                    <img src="${movie.poster}" alt="${movie.title}"/>
+                    <button>Eliminar</button>
+                    </article>
+                    `
+            }).join('')
+            const main = document.getElementById('main')
+            main.innerHTML = html
+        })
+
+        document.addEventListener('click', e => {
+            if (e.target.matches('button')) {
+                const article = e.target.closest('article')
+                const articleID = article.dataset.id
+                if (articleID) {
+                    fetch(`http://localhost:1234/movies/${articleID}`, {
+                        method: 'DELETE'
+                    }).then(res => {
+                        if (res.ok) {
+                            article.remove()
+                            console.log(res)
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <main id="main">
+        <h1>Implementando problema de CORS</h1>
+    </main>
+</body>
+
+</html>

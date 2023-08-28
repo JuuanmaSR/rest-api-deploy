@@ -1,0 +1,34 @@
+### Recuperar todas las peliculas
+GET http://localhost:1234/movies
+
+### Recuperar una pelicula por id
+GET http://localhost:1234/movies/241bf55d-b649-4109-af7c-0e6890ded3fc
+
+### Recuperar una pelicula por un género
+GET http://localhost:1234/movies?genre=Sci-Fi
+
+### Crear una pelicula con POST
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "title": "Oppenheimer",
+    "year": 2023,
+    "director": "Christopher Nolan",
+    "duration": 180,
+    "poster": "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H?format=jpg&name=900x900",
+    "genre": [
+        "Suspense",
+        "Drama"
+    ],
+    "rate": 8.5
+}
+
+### Actualizar una pelicula
+PATCH  http://localhost:1234/movies/9e70bde8-ea75-4fd0-8a54-a566f174ef44
+Content-Type: application/json
+
+{
+    "year": 2023,
+    "rate": 10
+}
